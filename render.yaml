@@ -12,8 +12,10 @@ services:
     plan: free
     dockerfilePath: ./backend/notes-app-backend/Dockerfile
     dockerContext: ./backend/notes-app-backend
-    healthCheck:
-      path: /
+    # 'healthCheck' va dentro de 'serviceDetails'
+    serviceDetails:
+      healthCheck:
+        path: /
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromService:
@@ -31,7 +33,9 @@ services:
     runtime: docker
     plan: free
     dockerfilePath: ./frontend/Dockerfile
-    dockerContext: ./frontend # CORRECCIÓN: La ruta correcta es solo ./frontend
-    rewrites:
-      - source: /api/*
-        destination: https://notes-backend.onrender.com/api/*
+    dockerContext: ./frontend
+    # 'rewrites' va dentro de 'serviceDetails'
+    serviceDetails:
+      rewrites:
+        - source: /api/*
+          destination: https://notes-backend.onrender.com/api/*
