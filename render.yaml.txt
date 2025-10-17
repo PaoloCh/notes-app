@@ -1,0 +1,34 @@
+services:
+  - name: notes-db
+    type: pserv
+    runtime: mysql
+    plan: free
+
+  - name: notes-backend
+    type: web
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/notes-app-backend/Dockerfile
+    dockerContext: ./backend/notes-app-backend
+    healthCheck:
+      path:
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromService:
+          type: pserv
+          name: notes-db
+          property: connectionString
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: SERVER_FORWARD_HEADERS_STRATEGY
+        value: NATIVE
+
+  - name: notes-frontend
+    type: web
+    runtime: docker
+    plan: free
+    dockerfilePath: ./frontend/notes-app-frontend/Dockerfile
+    dockerContext: ./frontend/notes-app-frontend
+    rewrites:
+      - source: /api/*
+        destination: [https://notes-backend.onrender.com/api/](https://notes-backend.onrender.com/api/)*
