@@ -1,9 +1,11 @@
 services:
+  # 1. Servicio de Base de Datos (MySQL)
   - name: notes-db
     type: pserv
     runtime: mysql
     plan: free
 
+  # 2. Servicio del Backend (Spring Boot)
   - name: notes-backend
     type: web
     runtime: docker
@@ -23,12 +25,13 @@ services:
       - key: SERVER_FORWARD_HEADERS_STRATEGY
         value: NATIVE
 
+  # 3. Servicio del Frontend (React + Nginx)
   - name: notes-frontend
     type: web
     runtime: docker
     plan: free
     dockerfilePath: ./frontend/Dockerfile
-    dockerContext: ./frontend
+    dockerContext: ./frontend # CORRECCIÓN: La ruta correcta es solo ./frontend
     rewrites:
       - source: /api/*
         destination: https://notes-backend.onrender.com/api/*
