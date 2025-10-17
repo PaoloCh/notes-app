@@ -11,7 +11,7 @@ services:
     dockerfilePath: ./backend/notes-app-backend/Dockerfile
     dockerContext: ./backend/notes-app-backend
     healthCheck:
-      path:
+      path: /
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromService:
@@ -27,8 +27,8 @@ services:
     type: web
     runtime: docker
     plan: free
-    dockerfilePath: ./frontend/notes-app-frontend/Dockerfile
-    dockerContext: ./frontend/notes-app-frontend
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
     rewrites:
       - source: /api/*
         destination: https://notes-backend.onrender.com/api/*
