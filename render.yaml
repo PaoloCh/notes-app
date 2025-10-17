@@ -31,4 +31,4 @@ services:
     dockerContext: ./frontend/notes-app-frontend
     rewrites:
       - source: /api/*
-        destination: [https://notes-backend.onrender.com/api/](https://notes-backend.onrender.com/api/)*
+        destination: https://notes-backend.onrender.com/api/*
